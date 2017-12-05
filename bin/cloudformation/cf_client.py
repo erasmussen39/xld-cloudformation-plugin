@@ -50,7 +50,7 @@ class CFClient(object):
 
     def describe_stack(self, deployed):
         if self.stack_exists(deployed.name):
-            return self.cf_client.describe_stack(StackName=deployed.name)
+            return self.cf_client.describe_stacks(StackName=deployed.name)
         return None
 
     def destroy_stack(self, deployed, wait=True, sleep_interval=5):

@@ -13,7 +13,7 @@ from cloudformation.cf_client import CFClient
 
 
 def process(task_vars):
-    deployed = task_vars['previousDeployed']
+    deployed = task_vars['thisCi']
 
     client = CFClient.new_instance(deployed.container)
     if client.destroy_stack(deployed):

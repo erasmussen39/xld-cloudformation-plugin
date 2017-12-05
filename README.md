@@ -19,17 +19,17 @@ Copy the downloaded JAR into the `SERVER_HOME/plugins` directory of XL Deploy.
 
 # Usage
 
-## CloudFormation Application Environment
+## CloudFormation Stack
 
-Define the information about the CloudFormation application environment,  ___cf.ApplicationEnvironment___, as a child of an ___aws.Cloud___ configuration item under the ___Infrastructure___ node.
+Define the information about the CloudFormation stack,  ___cloudformation.Stack___, as a child of an ___aws.Cloud___ configuration item under the ___Infrastructure___ node.
 
-![CloudFormationApplicationEnvironmentConfigurationItem](images/infra.png)
+![CloudFormationStackConfigurationItem](images/infra.png)
 
-## CloudFormation Application Bundle
+## CloudFormation Deployed Template
 
-Define the CloudFormation application bundle, ___cf.AppicationBundle___ in a ___udm.DeploymentPackage___.
+Define the CloudFormation deployed template, ___cloudformation.DeployedTemplate___ in a ___udm.DeploymentPackage___.
 
-![CloudFormationApplicationBundleConfigurationItem](images/deployable.png)
+![CloudFormationDeployedTemplateConfigurationItem](images/deployable.png)
 
 ## Development ##
 
@@ -77,12 +77,5 @@ From the project root,
 
 	The `testName` parameter is the absolute reference to the test class.
 	
-### Running Tests from IDE ###
-
-You can also run and debug tests from Intellij using a __python test__ configuration similar to the one below.
-
-![IntellijTest](images/intellij.png)
-	
-
 ---
 
