@@ -1,0 +1,46 @@
+plugins {
+    id "com.github.hierynomus.license" version "0.13.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+defaultTasks 'build'
+
+apply plugin: 'java'
+
+version='1.0.0'
+
+sourceSets.main.resources.srcDirs = ["src/main/jython", "src/main/resources"]
+sourceSets.test.resources.srcDirs = ["src/test/jython", "src/test/resources"]
+
+dependencies {
+    compile 'de.schlichtherle.truezip:truezip-file:7.7.10'
+}
+
+project.ext {
+    jythonInterpreter = "jython"
+}
+
+task runTest(type: Exec, dependsOn: ['testClasses']) {
+    environment = ["itest_conf_file": "$projectDir/itest-conf.json", "PATH": System.getenv("PATH"), "HOME": System.getenv("HOME")]
+    commandLine jythonInterpreter, "-m", "unittest", "-v", System.getProperty("testName")
+    workingDir = "$projectDir/src/test/jython"
+}
+
+task itests(type: Exec, dependsOn: ['testClasses']) {
+    logger.info("{$sourceSets.test.runtimeClasspath.asPath}")
+    environment = ["itest_conf_file": "$projectDir/itest-conf.json", "PATH": System.getenv("PATH"), "HOME": System.getenv("HOME")]
+    commandLine jythonInterpreter, "-Dpython.path={$sourceSets.test.runtimeClasspath.asPath}:{$sourceSets.main.runtimeClasspath.asPath}", "-m", "unittest", "discover", "-s", "./src/test/jython", "-p", "*_test.py", "-v"
+    workingDir = projectDir
+}
+
+license {
+    header rootProject.file('License.md')
+    strictCheck false
+    excludes(["**/*.json", "**/requests/*","**/responses/**","**/logback-test.xml"])
+    ext.year = Calendar.getInstance().get(Calendar.YEAR)
+    ext.name = 'XEBIALABS'
+}
+
