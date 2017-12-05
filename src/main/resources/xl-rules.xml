@@ -25,19 +25,9 @@
                 <description expression="true">"Create stack '%s' on AWS CloudFormation." % (deployed.name)</description>
                 <script>cf_rules/create_stack.py</script>
             </jython>
-            <checkpoint/>
-        </steps>
-    </rule>
-
-    <rule name="aws_cf.DescribeStack" scope="deployed">
-        <conditions>
-            <type>cloudformation.DeployedTemplate</type>
-            <operation>MODIFY</operation>
-        </conditions>
-        <steps>
             <jython>
-                <description expression="true">"Describe stack '%s' on AWS CloudFormation." % (previousDeployed.name)</description>
-                <script>cf_rules/describe_stack.py</script>
+                <description expression="true">"Wait for stack to enter 'Complete' state."</description>
+                <script>cf_rules/wait_for_ready.py</script>
             </jython>
             <checkpoint/>
         </steps>
@@ -50,7 +40,7 @@
         </conditions>
         <steps>
             <jython>
-                <description expression="true">"Destroy stack '%s' from AWS CloudFormation." % (previousDeployed.name)</description>
+                <description expression="true">"Destroy stack '%s' on AWS CloudFormation." % (previousDeployed.name)</description>
                 <script>cf_rules/destroy_stack.py</script>
             </jython>
             <checkpoint/>

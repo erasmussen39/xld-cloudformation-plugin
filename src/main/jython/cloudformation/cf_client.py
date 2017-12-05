@@ -14,6 +14,9 @@ from cloudformation.array_utils import ArrayUtil as arr
 from boto3.session import Session
 import time
 
+# TODO: for create_stack, should it wait and process output variables?  Or should it some later process
+# run describe_stack to get the output; e.g. when something later deployes to the stack?  Or maybe
+# we don't care about output variables?
 
 class CFClient(object):
     def __init__(self, access_key, access_secret, region):

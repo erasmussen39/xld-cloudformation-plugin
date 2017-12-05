@@ -13,13 +13,13 @@ from cloudformation.cf_client import CFClient
 
 
 def process(task_vars):
-    deployed = task_vars['previousDeployed']
+    deployed = task_vars['deployed']
 
     client = CFClient.new_instance(deployed.container)
-    if client.destroy_stack(deployed):
-        print "Stack '%s' destroyed successfully." % deployed.name
+    if client.create_stack(deployed):
+        print "Stack '%s' created successfully." % deployed.name
     else:
-        print "Stack '%s' does not exists. Ignoring." % deployed.name
+        print "Stack '%s' already exists." % deployed.name
     print "Done"
 
 
