@@ -70,12 +70,12 @@ class AwsCloudCi(Ci):
         itest_conf.apply_settings("aws_cloud", self, ["accesskey", "accessSecret"])
 
 
-class ApplicationEnvironmentCi(Ci):
+class DeployedTemplateCi(Ci):
     def __init__(self):
         self.account = AwsCloudCi()
-        super(ApplicationEnvironmentCi, self).__init__(self.account.id, "app_env", "cf.ApplicationEnvironment")
+        super(DeployedTemplateCi, self).__init__(self.account.id, "app_env", "cloudformation.DeployedTemplate")
         self.region = "eu-central-1"
-        self.application_name = "EBPluginTestApp"
+        self.application_name = "CFPluginTestApp"
         self.environment_name = "test"
         self.stack_name = "64bit Amazon Linux 2017.03 v4.3.0 running Node.js"
         self.s3_bucket_name = "cloudformation-plugin-test-eu-central-1"
@@ -103,11 +103,11 @@ class ApplicationEnvironmentCi(Ci):
         self.associatePublicIpAddress = None
 
 
-class ApplicationBundleCi(Ci):
+class TemplateCi(Ci):
     def __init__(self):
-        self.container = ApplicationEnvironmentCi()
-        super(ApplicationBundleCi, self).__init__("Applications/TestApp/1.0", "my_app", "cf.ApplicationVersion")
-        self.file = File("./src/test/resources/nodejs-v1.zip")
+        self.container = DeployedTemplateCi()
+        super(TemplateCi, self).__init__("Applications/TestApp/1.0", "my_app", "cloudformation.Template")
+        self.file = File("./src/test/resources/EC2InstanceWithSecurityGroupSample.yaml")
         self.stack_version = "v1"
-        self.stack_vars = {"SomeVar": "SomeVarValue"}
+        self.stack_vars = {"KeyName": "mykey"}
 
