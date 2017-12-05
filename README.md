@@ -1,8 +1,10 @@
 # XLD AWS CloudFormation Plugin
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/xebialabs-community/xld-cloudformation-plugin.svg?branch=master)](https://travis-ci.org/xebialabs-community/xld-cloudformation-plugin)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a633f54423d74ba3918eca421dad7d3c)](https://www.codacy.com/app/ravan/xld-cloudformation-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=xebialabs-community/xld-cloudformation-plugin&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9760cb22860c4139a7fa43c4d7a3f0a0)](https://www.codacy.com/app/erasmussen39/xld-cloudformation-plugin?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=erasmussen39/xld-cloudformation-plugin&amp;utm_campaign=Badge_Grade)
+[![Maintainability](https://api.codeclimate.com/v1/badges/44f2da52125f6946b8d5/maintainability)](https://codeclimate.com/github/erasmussen39/xld-cloudformation-plugin/maintainability)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Github All Releases][xld-cloudformation-plugin-downloads-image]]()
 
 ## Overview
 This plugin enables AWS CloudFormation deployments from XL Deploy.

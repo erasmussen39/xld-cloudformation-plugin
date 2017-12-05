@@ -1,0 +1,18 @@
+language: java
+jdk:
+- oraclejdk7
+- openjdk6
+notifications:
+  hipchat:
+    rooms:
+      secure: 1oUsjJZlXxXwaNbeHUs10ZcX8zvC/wq0ybA/opAyoA8ZHHt/II2lS0y8ATOLl0o1ZsjiRqvCrVxuxAoiNDYXAqzGIgkLlSk7WXUUn7HMAuWPRKRkgDMHvHsGUF3psm2q06OnIRM2HSa6x34EWc5J9DTRyQz6aGTiT1jXIc5JtQe0+YT+w3ZwCPmhSMkR5rm7UdVqpsPTX4Cr4MqzSCwVyRLKfnTbnpvIORTlfxn/kok+NwsMW//ijhGcRma64Z0//2XAtWIMQuSZedmPMhF+507/lRE6S1ubfoBn2Bx4PLIrx39E2G0Kt7kwi5gtzwxPV0NGrUAlKImgKz5QumgjDerGTdalyhASSzZVSx0OEfnh3OEDONCwph4injziWqAh6vxCGD0JNETH72wLAVzj2g7nBSqrTlDK26mhjeoUqj+a8tMEIVGwmgWCPlKgi6CvCFMSOs6EkDEuQnO4Mo5pMcH9i0q1GoXwHazFA5BUAR8VMceTfb8ldvtVfe1WmPCQ2utfRk9RUSQp+U6kg2IW749IsKawYJbJyqXDWEr33hW9gUWfLkvvao/Xoy2S4rlfI+/AkY5gA0ArtDU+J7M2WvrErqErProD36IPmp+SkOgVx+cpzKB+GG0itj+cPizuEqaUErWkZhN7fYy/v9v4ud/csWtIZM1ElEBpRM6jZHM=
+deploy:
+  provider: releases
+  api_key:
+    secure: NuEYyOc/34qLGZl87MMl3WA6rcAipOmr4C2GuUUxMgXFfI+9TIo2nEnJXv+w71+lzdu/iOLQxgKz8hHE2YH+QVf3b8Tq3Qx82uhTk8ZC3d9B8s2EKah4EtGLTS33KEFMyVDXJIK9X9FSjFGZE5+IS8Bl39p7ZthCHFl+dWeWXuHJEKBqLPzUNJnArcnTQsAetzA7a65vpkEDpd6+eD4vUtIzR7DbSUMLF+dcrUdITv8j9JPe0Sl/ftxiIuK1PWi/run/Zu00p3Wj2gEAqN0xs3oroMZrjgHgOriYXUNkDAslxi3hCTDBWpuvOsZdHF/YUhk6iUxs4YdUwTsFpbog1XAzeMAIlVis5AwHkOHjx+tCfci5OaZS1BrhR/N7bsaTx1rXyjYbbQkPCZpyJBKKD8WsNeldYNbFOQnD1/ui7AYatrS109+zUlmwqN65L/RSQW8kup2DSqKeZuOikiVgR2SLtADI/UICrYszdGiVJzhCJfbh0DJwasIujQdu2322tBC6aXebrCU6694FxJw1fe56Zg5ETPS/9KannOz7uyH1yqC/jNun5P4pX/ajDOtX8oJBH0UyHG5fZn5Cws6vlJdE38TdKlIBLwHbrQsKw3iMJdlZ5TmQVRXjjvp0aW4L9PJsGVjRGiXW0B7KawEflRrMGIwd9FpTzgWT9HbiLWY=
+  file: build/libs/xld-cloudformation-plugin-1.0.0.jar
+    skip_cleanup: true
+    on:
+      all_branches: true
+      tags: true
+      repo: xebialabs-community/xld-cloudformation-plugin
