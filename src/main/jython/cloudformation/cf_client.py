@@ -10,6 +10,7 @@
 
 
 from cloudformation import create_session
+from cloudformation.array_utils import ArrayUtil as arr
 from boto3.session import Session
 import time
 
