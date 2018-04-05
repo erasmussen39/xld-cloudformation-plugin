@@ -6,6 +6,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Github All Releases][xld-cloudformation-plugin-downloads-image]]()
 
+[xld-cloudformation-plugin-downloads-image]: https://img.shields.io/github/downloads/xebialabs-community/xld-cloudformation-plugin/total.svg
+
 ## Overview
 This plugin enables AWS CloudFormation deployments from XL Deploy.
 
