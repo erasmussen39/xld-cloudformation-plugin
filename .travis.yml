@@ -1,7 +1,4 @@
 language: java
-jdk:
-- oraclejdk7
-- openjdk6
 notifications:
   hipchat:
     rooms:
@@ -10,9 +7,9 @@ deploy:
   provider: releases
   api_key:
     secure: NuEYyOc/34qLGZl87MMl3WA6rcAipOmr4C2GuUUxMgXFfI+9TIo2nEnJXv+w71+lzdu/iOLQxgKz8hHE2YH+QVf3b8Tq3Qx82uhTk8ZC3d9B8s2EKah4EtGLTS33KEFMyVDXJIK9X9FSjFGZE5+IS8Bl39p7ZthCHFl+dWeWXuHJEKBqLPzUNJnArcnTQsAetzA7a65vpkEDpd6+eD4vUtIzR7DbSUMLF+dcrUdITv8j9JPe0Sl/ftxiIuK1PWi/run/Zu00p3Wj2gEAqN0xs3oroMZrjgHgOriYXUNkDAslxi3hCTDBWpuvOsZdHF/YUhk6iUxs4YdUwTsFpbog1XAzeMAIlVis5AwHkOHjx+tCfci5OaZS1BrhR/N7bsaTx1rXyjYbbQkPCZpyJBKKD8WsNeldYNbFOQnD1/ui7AYatrS109+zUlmwqN65L/RSQW8kup2DSqKeZuOikiVgR2SLtADI/UICrYszdGiVJzhCJfbh0DJwasIujQdu2322tBC6aXebrCU6694FxJw1fe56Zg5ETPS/9KannOz7uyH1yqC/jNun5P4pX/ajDOtX8oJBH0UyHG5fZn5Cws6vlJdE38TdKlIBLwHbrQsKw3iMJdlZ5TmQVRXjjvp0aW4L9PJsGVjRGiXW0B7KawEflRrMGIwd9FpTzgWT9HbiLWY=
+  skip_cleanup: true
   file: build/libs/xld-cloudformation-plugin-1.0.0.jar
-    skip_cleanup: true
-    on:
-      all_branches: true
-      tags: true
-      repo: xebialabs-community/xld-cloudformation-plugin
+  on:
+    all_branches: true
+    tags: true
+    repo: xebialabs-community/xld-cloudformation-plugin
