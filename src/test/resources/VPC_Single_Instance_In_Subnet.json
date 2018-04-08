@@ -61,6 +61,13 @@
             "appBase": "webapps",
             "hostName": "public"
           }
+      ],
+      "XLD::Environments" : [
+        {
+            "id": "cloud-dev",
+            "type": "udm.Environment",
+            "members": [ {"ci ref": "Infrastructure/cloud/webserver/tc/public"} ]
+        }
       ]
     },
   

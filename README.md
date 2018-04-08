@@ -39,70 +39,64 @@ Define the CloudFormation deployed template, ___cloudformation.DeployedTemplate_
 
 The plugin is capable of creating configuration items in XL Deploy after CloudFormation stack creation.  This can be useful if you create hosts and deployment containers (middleware) with CloudFormation and then subsequently want to deploy application or services using XL Deploy.
 
-The CI information is defined in Metadata element of the CloudFormation template.  Any kind of configuration element can be created.  In addition, dynamic properties can be inserted at runtime using property placeholders.  
+The CI information is defined in Metadata element of the CloudFormation template.  Any kind of configuration element can be created.  In addition, dynamic properties can be inserted at runtime using property placeholders.  Placeholders are signified by {..} surrounding the placeholder name e.g. {Address} below.
 
 ```
-  "Metadata": {
-      "XLD::Infrastructure" : [
-            {
-                "id": "cloud",
-                "type": "core.Directory",
-            },
-            {
-                "id": "cloud/webserver",
-                "type": "overthere.SshHost",
-                "os": "UNIX",
-                "connectionType": "SFTP",
-                "address": "{address}",
-                "port": "22",
-                "username": "admin"
-            },
-            {
-                "id": "cloud/webserver/tc",
-                "type": "tomcat.Server",
-                "home": "/opt/local/tomcat",
-                "startCommand": "service tomcat start",
-                "stopCommand": "service tomcat stop",
-                "startWaitTime": 0,
-                "stopWaitTime":0
-            },
-            {
-                "id": "cloud/webserver/public",
-                "type": "tomcat.VirtualHost",
-                "appBase": "webapps",
-                "hostName": "public"
-            }
-      ],
-      "XLD::Environment" : [
-            {
-
-            }
-      ]
-  }
-
-  "Outputs": {
-      "XLDInfraNameId": {
-          "Description": "InstanceId of the newly created EC2 instance",
-          "Value": {
-              "Ref": "EC2Instance"
-          }
-      },
-      "XLDInfraNameOS": {
-          "Description": "OS running on this host",
-          "Value": "unix"
-      },
-      "XLDInfraNameAddress": {
-          "Description": "IP address or hostname for this host"
-          "Value": {
-              "Fn::GetAtt": [
-                  "EC2Instance",
-                  "PublicIp"
-              ]
-          }
-      },
-  }
+"Metadata": {
+    "XLD::Infrastructure" : [
+        {
+            "id": "cloud",
+            "type": "core.Directory",
+        },
+        {
+            "id": "cloud/webserver",
+            "type": "overthere.SshHost",
+            "os": "UNIX",
+            "connectionType": "SFTP",
+            "address": "{Address}",
+            "port": "22",
+            "username": "admin"
+        },
+        {
+            "id": "cloud/webserver/tc",
+            "type": "tomcat.Server",
+            "home": "/opt/local/tomcat",
+            "startCommand": "service tomcat start",
+            "stopCommand": "service tomcat stop",
+            "startWaitTime": 0,
+            "stopWaitTime":0
+        },
+        {
+            "id": "cloud/webserver/tc/public",
+            "type": "tomcat.VirtualHost",
+            "appBase": "webapps",
+            "hostName": "public"
+        }
+    ],
+    "XLD::Environments" : [
+        {
+            "id": "cloud-dev",
+            "type": "udm.Environment",
+            "members": [ {"ci ref": "Infrastructure/cloud/webserver/tc/public"} ]
+        },
+    ]
+}
 ```
-Due to limitations in how CloudFormation names output variables and that output values must be strings, ...
+
+Here is an example Outputs section of a CloudFormation template.  Notice the 'Address' variable.  The value of this variable will be substituted into the above template at runtime.
+
+```
+"Outputs" : {
+    "URL" : {
+    "Value" : { "Fn::Join" : [ "", ["http://", { "Fn::GetAtt" : ["WebServerInstance", "PublicIp"] }]]},
+    "Description" : "Newly created application URL"
+    },
+    "Address": {
+    "Value" : { "Fn::GetAtt" : ["WebServerInstance", "PublicIp"] },
+    "Description" : "Host IP address"
+    }
+}
+```
 
 
 ## Development ##

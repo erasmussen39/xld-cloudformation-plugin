@@ -17,13 +17,21 @@ def process(task_vars):
 
     client = CFClient.new_instance(deployed.container)
     template_metadata = client.get_template_body(deployed)['Metadata']
-    for key in template_metadata:
-        if key.startswith('XLD'):
-            repo_root = key[5:]
-            ci_tmpl = template_metadata[key]
 
-            ci_fact = CIFactory.new_instance(repositoryService, metadataService, repo_root, ci_tmpl, deployed.outputVariables)
-            ci_fact.createCis()
+    ci_fact = CIFactory.new_instance(repositoryService, metadataService, deployed.outputVariables)
+
+    # process individually to guarantee order
+    if 'XLD::Applications' in template_metadata:
+        ci_tmpl = template_metadata['XLD::Applications']
+        ci_fact.createCis('Applications', ci_tmpl)
+
+    if 'XLD::Infrastructure' in template_metadata:
+        ci_tmpl = template_metadata['XLD::Infrastructure']
+        ci_fact.createCis('Infrastructure', ci_tmpl)
+
+    if 'XLD::Environments' in template_metadata:
+        ci_tmpl = template_metadata['XLD::Environments']
+        ci_fact.createCis('Environments', ci_tmpl)
 
     print "Done"
 
