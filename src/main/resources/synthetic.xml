@@ -17,9 +17,6 @@
     <type type="cloudformation.Stack" extends="udm.BaseContainer">
         <property name="account" kind="ci" referenced-type="aws.Cloud" as-containment="true" />
         <property name="region" description="AWS Region. See http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html"/>
-
-        <!-- control tasks -->
-        <method name="createStack" label="Create Stack" delegate="jythonScript" script="cf_rules/create_stack.py"/>
     </type>
     
     <type type="cloudformation.DeployedTemplate" extends="udm.BaseDeployedArtifact" deployable-type="cloudformation.Template" container-type="cloudformation.Stack">
@@ -30,7 +27,8 @@
 
         <!-- control tasks -->
         <method name="describeStack" label="Describe Stack" delegate="jythonScript" script="cf_rules/describe_stack.py"/>
-        <method name="destroyStack" label="Destroy Stack" delegate="jythonScript" script="cf_rules/destroy_stack.py"/>
+        <method name="listResources" label="List Resources" delegate="jythonScript" script="cf_rules/list_resources.py"/>
+        <method name="destroyStack"  label="Destroy Stack"  delegate="jythonScript" script="cf_rules/destroy_stack.py"/>
     </type>
 
 </synthetic>

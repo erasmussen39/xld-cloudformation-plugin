@@ -16,10 +16,11 @@ def process(task_vars):
     deployed = task_vars['deployed']
 
     client = CFClient.new_instance(deployed.container)
-    if client.wait_for_ready_status(deployed):
-        print "Stack '%s' complete." % deployed.name
+    if client.capture_output(deployed):
+        print "Capturing output of stack '%s' successfully." % deployed.name
     else:
-        print "Stack '%s' failed to complete." % deployed.name
+        print "Capturing output of stack '%s' failed." % deployed.name
+
     print "Done"
 
 

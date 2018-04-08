@@ -29,6 +29,14 @@
                 <description expression="true">"Wait for stack to enter 'Complete' state."</description>
                 <script>cf_rules/wait_for_ready.py</script>
             </jython>
+            <jython>
+                <description expression="true">"Capture output variables from stack."</description>
+                <script>cf_rules/capture_output.py</script>
+            </jython>
+            <jython>
+                <description expression="true">"Create infrastructure for hosts."</description>
+                <script>cf_rules/create_infrastructure.py</script>
+            </jython>
             <checkpoint/>
         </steps>
     </rule>
@@ -42,6 +50,10 @@
             <jython>
                 <description expression="true">"Destroy stack '%s' on AWS CloudFormation." % (previousDeployed.name)</description>
                 <script>cf_rules/destroy_stack.py</script>
+            </jython>
+            <jython>
+                <description expression="true">"Wait for stack to enter 'Deleted' state."</description>
+                <script>cf_rules/wait_for_deleted.py</script>
             </jython>
             <checkpoint/>
         </steps>

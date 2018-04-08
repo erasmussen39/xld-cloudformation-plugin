@@ -13,14 +13,9 @@ from cloudformation.cf_client import CFClient
 
 
 def process(task_vars):
-    deployed = task_vars['deployed']
-
+    deployed = task_vars['thisCi']
     client = CFClient.new_instance(deployed.container)
-    if client.wait_for_ready_status(deployed):
-        print "Stack '%s' complete." % deployed.name
-    else:
-        print "Stack '%s' failed to complete." % deployed.name
-    print "Done"
+    print client.list_resources(deployed)
 
 
 if __name__ == '__main__' or __name__ == '__builtin__':
