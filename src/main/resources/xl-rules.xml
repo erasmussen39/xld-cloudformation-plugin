@@ -34,7 +34,7 @@
                 <script>cf_rules/capture_output.py</script>
             </jython>
             <jython>
-                <description expression="true">"Create infrastructure for hosts."</description>
+                <description expression="true">"Create configuration items."</description>
                 <script>cf_rules/create_infrastructure.py</script>
             </jython>
             <checkpoint/>

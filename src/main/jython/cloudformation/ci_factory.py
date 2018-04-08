@@ -21,38 +21,21 @@ class CIFactory(object):
 
     @staticmethod
     def new_instance(repositoryService, metadataService, root, template, cfout):
-        print "DEBUG ----- root"
-        print root
-        print "DEBUG ----- template"
-        print template
-        print "DEBUG ----- cfout"
-        print cfout
-        print "\n"
         return CIFactory(repositoryService, metadataService, root, template, cfout)
 
     def createCis(self):
-        print "Creating '%s' configuration items" % self.root
-
-        # convert the CloudFormation output json into a dictionary
-        # ovars = {}
-        # for ovar in self.cfout:
-        #     print "DEBUG ----- ovar %s" % ovar
-        #     ovars[ovar.get('OutputKey')] = ovar.get('OutputValue')
+        print "Creating configuration items in '%s'" % self.root
 
         # iterate over list of ci definitions in template
         for ci_info in self.template:
             # scan template for property placeholders, substitute values
-            print "DEBUG ---- ci_info %s" % ci_info
             for k in ci_info:
-                print "DEBUG --- key   = %s" % k
-                print "DEBUG --- value = %s" % ci_info[k]
                 if '{' in ci_info[k]:
                     try:
                         ci_info[k] = ci_info[k].format(self.cfout)
                     except KeyError:
                         print "WARN: Property placeholder '%s' was not found in the output dictionary." % k
 
-            print "DEBUG --- after format %s" % ci_info
             self._create_ci(ci_info)
 
 
@@ -60,10 +43,6 @@ class CIFactory(object):
 
     def _create_ci(self, ci_info):
         print "Creating '%s' : '%s'" % (ci_info['type'], ci_info['id'])
-
-        print "DEBUG ----- ci info" 
-        print ci_info
-        print "\n"
 
         id = "%s/%s" % (self.root, ci_info['id'])
         if self.repositoryService.exists(id):
@@ -77,8 +56,6 @@ class CIFactory(object):
         for prop in ci_info:
             if prop in ['id', 'type']:
                 continue
-
-            print "DEBUG ---- set property '%s'" % prop
             ci_obj.setProperty(prop, ci_info[prop])
 
         # add ci to repository

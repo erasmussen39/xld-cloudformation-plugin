@@ -35,6 +35,76 @@ Define the CloudFormation deployed template, ___cloudformation.DeployedTemplate_
 
 ![CloudFormationDeployedTemplateConfigurationItem](images/deployable.png)
 
+## Automatically Creating XL Deploy Configuration Items
+
+The plugin is capable of creating configuration items in XL Deploy after CloudFormation stack creation.  This can be useful if you create hosts and deployment containers (middleware) with CloudFormation and then subsequently want to deploy application or services using XL Deploy.
+
+The CI information is defined in Metadata element of the CloudFormation template.  Any kind of configuration element can be created.  In addition, dynamic properties can be inserted at runtime using property placeholders.  
+
+```
+  "Metadata": {
+      "XLD::Infrastructure" : [
+            {
+                "id": "cloud",
+                "type": "core.Directory",
+            },
+            {
+                "id": "cloud/webserver",
+                "type": "overthere.SshHost",
+                "os": "UNIX",
+                "connectionType": "SFTP",
+                "address": "{address}",
+                "port": "22",
+                "username": "admin"
+            },
+            {
+                "id": "cloud/webserver/tc",
+                "type": "tomcat.Server",
+                "home": "/opt/local/tomcat",
+                "startCommand": "service tomcat start",
+                "stopCommand": "service tomcat stop",
+                "startWaitTime": 0,
+                "stopWaitTime":0
+            },
+            {
+                "id": "cloud/webserver/public",
+                "type": "tomcat.VirtualHost",
+                "appBase": "webapps",
+                "hostName": "public"
+            }
+      ],
+      "XLD::Environment" : [
+            {
+
+            }
+      ]
+  }
+
+  "Outputs": {
+      "XLDInfraNameId": {
+          "Description": "InstanceId of the newly created EC2 instance",
+          "Value": {
+              "Ref": "EC2Instance"
+          }
+      },
+      "XLDInfraNameOS": {
+          "Description": "OS running on this host",
+          "Value": "unix"
+      },
+      "XLDInfraNameAddress": {
+          "Description": "IP address or hostname for this host"
+          "Value": {
+              "Fn::GetAtt": [
+                  "EC2Instance",
+                  "PublicIp"
+              ]
+          }
+      },
+  }
+```
+Due to limitations in how CloudFormation names output variables and that output values must be strings, ...
+
+
 ## Development ##
 
 ### Setting up AWS credentials ###
@@ -77,7 +147,7 @@ From the project root,
 
 * Run all tests with `./gradlew clean build itest` 
 
-* Run a single test with `./gradlew runTest -DtestName=itests.connection_test.CheckConnectionTest`
+* Run a single test with `./gradlew runTest -DtestName='itests.connection_test.CheckConnectionTest'`
 
 	The `testName` parameter is the absolute reference to the test class.
 	
