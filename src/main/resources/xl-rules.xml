@@ -48,6 +48,10 @@
         </conditions>
         <steps>
             <jython>
+                <description expression="true">"Deleting configuration items."</description>
+                <script>cf_rules/delete_infrastructure.py</script>
+            </jython>
+            <jython>
                 <description expression="true">"Destroy stack '%s' on AWS CloudFormation." % (previousDeployed.name)</description>
                 <script>cf_rules/destroy_stack.py</script>
             </jython>

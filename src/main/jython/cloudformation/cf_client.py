@@ -14,6 +14,8 @@ from cloudformation.array_utils import ArrayUtil as arr
 from cloudformation.ci_factory import CIFactory
 
 from boto3.session import Session
+from botocore.exceptions import ClientError
+
 import time
 import re
 
@@ -54,7 +56,14 @@ class CFClient(object):
     def describe_stack(self, deployed):
         stackname = self._sanatize_name(deployed.name)
         if self._stack_exists(stackname):
-            return self.cf_client.describe_stacks(StackName=stackname)['Stacks'][0]
+            # I've seen a scenario where the stack exists as checked above
+            # but describe_stacks fails with the stack not found.
+            try:
+                return self.cf_client.describe_stacks(StackName=stackname)['Stacks'][0]
+            except ClientError, arg:
+                print "WARN: Describe Stack generated exception. The stack probably doesn't exist. '%s'" % arg
+                return None
+
         return None
 
 
@@ -99,7 +108,12 @@ class CFClient(object):
             if interval_cnt > max_intervals:
                 raise Exception("Stack [%s] timed out waiting for 'Complete'" % (deployed.name))
 
-            stack_status = self.describe_stack(deployed)['StackStatus']
+            stack = self.describe_stack(deployed)
+            if stack is None:
+                time.sleep(sleep_interval)
+                continue
+
+            stack_status = stack['StackStatus']
             if stack_status in ready_statuses:
                 return True
             elif stack_status in stopped_statuses:
@@ -125,7 +139,11 @@ class CFClient(object):
             if interval_cnt > max_intervals:
                 raise Exception("Stack [%s] timed out waiting for 'Delete'" % (deployed.name))
                 
-            stack_status = self.describe_stack(deployed)['StackStatus']
+            stack = self.describe_stack(deployed)
+            if stack is None:
+                return True
+
+            stack_status = stack['StackStatus']
             if stack_status in stopped_statuses:
                 return True
             elif stack_status in failed_statuses:
@@ -137,6 +155,10 @@ class CFClient(object):
 
 
     def get_template_body(self, deployed):
+        stackname = self._sanatize_name(deployed.name)
+        if not self._stack_exists(stackname):
+            return None
+
         stackname = self._sanatize_name(deployed.name)
         return self.cf_client.get_template(StackName=stackname)['TemplateBody']
 

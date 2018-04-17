@@ -10,7 +10,7 @@ defaultTasks 'build'
 
 apply plugin: 'java'
 
-version='1.1.0'
+version='1.2.0'
 
 sourceSets.main.resources.srcDirs = ["src/main/jython", "src/main/resources"]
 sourceSets.test.resources.srcDirs = ["src/test/jython", "src/test/resources"]

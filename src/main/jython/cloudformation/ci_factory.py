@@ -33,6 +33,13 @@ class CIFactory(object):
             self._create_ci(root, ci_info)
 
 
+    def deleteCis(self, root, template):
+        print "Deleting configuration items in '%s'" % root
+
+        for ci_tmpl in template:
+            self._delete_ci(root, ci_tmpl)
+
+
     # INTERNAL FUNCTIONS -----------------------------------------
 
     # scan template for property placeholders, substitute values
@@ -86,3 +93,14 @@ class CIFactory(object):
 
         # add ci to repository
         self.repositoryService.create(id, ci_obj)
+
+
+    def _delete_ci(self, root, ci_info):
+        print "Deleting '%s' : '%s'" % (ci_info['type'], ci_info['id'])
+
+        id = "%s/%s" % (root, ci_info['id'])
+        if not self.repositoryService.exists(id):
+            print "CI '%s' already deleted, skipping." % id
+            return
+
+        self.repositoryService.delete(id)
